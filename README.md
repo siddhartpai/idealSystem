@@ -1,6 +1,10 @@
-#Linux Shortcuts
+#Scripts from the interwebs
 
-##Basic Linux scripts which do stuff . 
+Folder where I'll add useful scripts (for me ;)  .
 
--SpaceToGoodCase.sh : Converts all files with spaces to underscore,lowercase and removes other special characters.
+Don't blame me if I accidentally  rm - rf / .
+
+
+###Scripts
+ -SpaceToGoodCase.sh : Converts all files with spaces to underscore,lowercase and removes other special characters.
 
