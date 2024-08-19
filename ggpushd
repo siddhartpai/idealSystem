@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Name of the tmux window to use for ggpushing
+WINDOW_NAME="ggpush"
+
+# Get the current directory
+CURRENT_DIR=$(pwd)
+
+# Get the current branch
+CURRENT_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if the tmux window already exists
+if tmux list-windows | grep -q "$WINDOW_NAME"; then
+    # Reuse the existing window
+    WINDOW_ID=$(tmux list-windows | grep "$WINDOW_NAME" | cut -d: -f1)
+else
+    # Create a new tmux window and get its ID
+    tmux new-window -n "$WINDOW_NAME"
+    WINDOW_ID=$(tmux list-windows | grep "$WINDOW_NAME" | cut -d: -f1)
+fi
+
+# Get the pane ID of the window
+PANE_ID="$WINDOW_ID.0"
+
+# Send commands to the tmux window: change directory and run ggpush for the specific branch
+tmux send-keys -t "$PANE_ID" "cd '$CURRENT_DIR' && git push origin '$CURRENT_BRANCH' > >(tee /dev/null) 2>&1" Enter
+
+# Optional: Switch to the ggpush window
+# tmux select-window -t "$WINDOW_ID"
+
